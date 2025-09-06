@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Header from "../../components/Header";
 import Hero from "./components/hero";
 import SpecialDishes from "./components/specialdishes";
@@ -12,10 +12,21 @@ import drink from "../../assets/Images/Drink.jpeg";
 import dessert from "../../assets/Images/Dessert.jpeg";
 import snack from "../../assets/Images/Snacks.jpeg";
 import all from "../../assets/Images/All_items.jpeg";
+import Slider from "react-slick";
 
 export const MainPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All Items");
-  console.log(selectedCategory);
+  const [selectedTiming, setSelectedTiming] = useState("Breakfast");
+  const menuRef = useRef(null);
+  const timingButtons = [
+    { id: "breakfast", label: "Breakfast", icon: "🌅" },
+    { id: "lunch", label: "Lunch", icon: "☀️" },
+    { id: "snacks", label: "Snacks", icon: "🍿" },
+    { id: "dinner", label: "Dinner", icon: "🌙" },
+  ];
+  console.log("Selected Category:", selectedCategory);
+  console.log("Selected Timing:", selectedTiming);
+
   return (
     <div>
       <Header path="/main" />
@@ -94,39 +105,92 @@ export const MainPage = () => {
             every taste and occasion.
           </p>
         </div>
-        <div className="flex items-center justify-center gap-6 text-gray-600 font-semibold mt-8 mb-4 text-lg sm:text-xl lg:text-2xl cursor-pointer">
-          <button>Breakfast</button>
-          <button>Lunch</button>
-          <button>Snacks</button>
-          <button>Dinner</button>
+        {/* Enhanced Timing Buttons */}
+        <div className="flex items-center justify-center gap-2 sm:gap-4 lg:gap-6 mt-8 mb-8 px-4">
+          {timingButtons.map((timing) => (
+            <button
+              key={timing.id}
+              onClick={() => {
+                setSelectedTiming(timing.label);
+
+                if (timing.label === "Lunch" || timing.label === "Dinner") {
+                  setTimeout(() => {
+                    menuRef.current?.scrollIntoView({ behavior: "smooth" });
+                  }, 0);
+                }
+              }}
+              className={`
+                flex items-center gap-2 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 
+                rounded-full font-semibold text-sm sm:text-base lg:text-lg
+                transition-all duration-300 transform hover:scale-105
+                border-2 shadow-md hover:shadow-lg
+                ${
+                  selectedTiming === timing.label
+                    ? "bg-gradient-to-r from-[#fc7f09] to-[#e67408] text-white border-[#fc7f09] shadow-orange-300"
+                    : "bg-white text-gray-700 border-gray-300 hover:border-[#fc7f09] hover:text-[#fc7f09] hover:bg-orange-50"
+                }
+              `}
+            >
+              <span className="text-base sm:text-lg lg:text-xl">
+                {timing.icon}
+              </span>
+              <span className="hidden sm:inline">{timing.label}</span>
+              <span className="sm:hidden">{timing.label.substring(0, 1)}</span>
+            </button>
+          ))}
         </div>
-        <div className="flex items-center justify-center gap-5 p-4 m-4 mt-2 pt-2">
-          <Menu
-            food={all}
-            alt="All Items"
-            onClick={() => setSelectedCategory("All Items")}
-          />
-          <Menu
-            food={snack}
-            alt="Appetizers"
-            onClick={() => setSelectedCategory("Appetizers")}
-          />
-          <Menu
-            food={food}
-            alt="Main Courses"
-            onClick={() => setSelectedCategory("Main Courses")}
-          />
-          <Menu
-            food={dessert}
-            alt="Desserts"
-            onClick={() => setSelectedCategory("Desserts")}
-          />
-          <Menu
-            food={drink}
-            alt="Drinks"
-            onClick={() => setSelectedCategory("Drinks")}
-          />
+
+        {/* Selected Timing Display */}
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center gap-2 px-6 py-2 bg-orange-100 rounded-full">
+            <span className="text-[#fc7f09] font-semibold text-lg">
+              Now Showing: {selectedTiming} Menu
+            </span>
+          </div>
         </div>
+        {/* Menu Category Cards */}
+
+        {selectedTiming === "Dinner" || selectedTiming === "Lunch" ? (
+          <>
+            <div
+              className="flex items-center justify-center gap-5 p-4 m-4 mt-2 pt-2"
+              ref={menuRef}
+            >
+              <Menu
+                food={all}
+                alt="All Items"
+                onClick={() => setSelectedCategory("All Items")}
+              />
+              <Menu
+                food={snack}
+                alt="Appetizers"
+                onClick={() => setSelectedCategory("Appetizers")}
+              />
+              <Menu
+                food={food}
+                alt="Main Courses"
+                onClick={() => setSelectedCategory("Main Courses")}
+              />
+              <Menu
+                food={dessert}
+                alt="Desserts"
+                onClick={() => setSelectedCategory("Desserts")}
+              />
+              <Menu
+                food={drink}
+                alt="Drinks"
+                onClick={() => setSelectedCategory("Drinks")}
+              />
+            </div>
+            <div className="text-center mt-6 mb-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-full">
+                <span className="text-gray-700 font-medium">
+                  Selected: {selectedCategory}
+                </span>
+              </div>
+            </div>
+          </>
+        ) : null}
       </section>
     </div>
   );

@@ -65,11 +65,6 @@ const Header = (props) => {
           aria-expanded={isMenuOpen}
         >
           <span className="sr-only">Open main menu</span>
-          {/* Show current state for debugging */}
-          <span className="text-xs absolute -top-2 -right-2 bg-red-500 text-white px-1 rounded">
-            {isMenuOpen ? "ON" : "OFF"}
-          </span>
-
           {/* Hamburger icon */}
           {!isMenuOpen ? (
             <svg

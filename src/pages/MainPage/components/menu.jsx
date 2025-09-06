@@ -16,6 +16,7 @@ function Menu({ food, alt, onClick }) {
         overflow-hidden transform hover:-translate-y-1 sm:hover:-translate-y-2
         mx-auto
         bg-cover bg-center bg-no-repeat cursor-pointer
+
       "
       style={{ backgroundImage: `url(${food})` }}
     >
