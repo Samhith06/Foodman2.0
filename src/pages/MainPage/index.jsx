@@ -94,6 +94,12 @@ export const MainPage = () => {
             every taste and occasion.
           </p>
         </div>
+        <div className="flex items-center justify-center gap-6 text-gray-600 font-semibold mt-8 mb-4 text-lg sm:text-xl lg:text-2xl cursor-pointer">
+          <button>Breakfast</button>
+          <button>Lunch</button>
+          <button>Snacks</button>
+          <button>Dinner</button>
+        </div>
         <div className="flex items-center justify-center gap-5 p-4 m-4 mt-2 pt-2">
           <Menu
             food={all}
