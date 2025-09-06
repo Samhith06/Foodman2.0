@@ -13,6 +13,8 @@ import dessert from "../../assets/Images/Dessert.jpeg";
 import snack from "../../assets/Images/Snacks.jpeg";
 import all from "../../assets/Images/All_items.jpeg";
 import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export const MainPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All Items");
@@ -26,7 +28,28 @@ export const MainPage = () => {
   ];
   console.log("Selected Category:", selectedCategory);
   console.log("Selected Timing:", selectedTiming);
+  let sliderRef = useRef(null);
+  const play = () => {
+    sliderRef.slickPlay();
+  };
+  const pause = () => {
+    sliderRef.slickPause();
+  };
 
+  const settings = {
+    dots: false,
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    swipeToSlide: true,
+    pauseOnHover: true,
+    responsive: [
+      { breakpoint: 1024, settings: { slidesToShow: 2 } },
+      { breakpoint: 640, settings: { slidesToShow: 1 } },
+    ],
+  };
   return (
     <div>
       <Header path="/main" />
@@ -40,27 +63,27 @@ export const MainPage = () => {
           innovation with tradition to delight your senses.
         </p>
       </div>
-      <section className="bg-white p-4 m-4 mt-2 pt-2 2xl:p-8 2xl:m-8 text-center hover:shadow-lg rounded-2xl shadow-gray-300 shadow-md">
-        <div className="flex overflow-x-auto gap-6 2xl:gap-10 mt-6 scrollbar-hide">
-          <div className="flex-shrink-0 w-[80%] sm:w-[50%] md:w-[33%] lg:w-1/4 min-w-[250px] 2xl:w-1/8">
+      <section className="bg-white p-4 m-4 mt-2 2xl:p-8 2xl:m-8 text-center hover:shadow-lg rounded-2xl shadow-gray-300 shadow-md w-full max-w-6xl mx-auto">
+        <Slider {...settings}>
+          <div className="px-2">
             <SpecialDishes
               img={card1}
               alt="Chicken Salad"
               description="Shredded or diced chicken tossed with crisp lettuce, juicy tomatoes, cucumbers, and onions, dressed in a creamy mayo or tangy vinaigrette for a refreshing, protein-packed dish bursting with flavor and crunch."
               price="$12.99"
+              className="mx-2"
             />
           </div>
-
-          <div className="flex-shrink-0 w-[80%] sm:w-[50%] md:w-[33%] lg:w-1/4 min-w-[250px] 2xl:w-1/8">
+          <div className="px-2">
             <SpecialDishes
               img={card2}
               alt="Chicken Pasta"
               description="Tender chicken pieces sautéed with garlic and herbs, then tossed with al dente pasta in a rich, creamy sauce or zesty tomato base, blended with veggies like bell peppers and spinach for a satisfying, flavorful meal."
               price="$15.99"
+              className="mx-2"
             />
           </div>
-
-          <div className="flex-shrink-0 w-[80%] sm:w-[50%] md:w-[33%] lg:w-1/4 min-w-[250px] 2xl:w-1/8">
+          <div className="px-2">
             <SpecialDishes
               img={card3}
               alt="Lasagna"
@@ -68,7 +91,7 @@ export const MainPage = () => {
               price="$18.99"
             />
           </div>
-          <div className="flex-shrink-0 w-[80%] sm:w-[50%] md:w-[33%] lg:w-1/4 min-w-[250px] 2xl:w-1/8">
+          <div className="px-2">
             <SpecialDishes
               img={card1}
               alt="Chicken Salad"
@@ -76,8 +99,7 @@ export const MainPage = () => {
               price="$12.99"
             />
           </div>
-
-          <div className="flex-shrink-0 w-[80%] sm:w-[50%] md:w-[33%] lg:w-1/4 min-w-[250px] 2xl:w-1/8">
+          <div className="px-2">
             <SpecialDishes
               img={card2}
               alt="Chicken Pasta"
@@ -85,7 +107,7 @@ export const MainPage = () => {
               price="$15.99"
             />
           </div>
-          <div className="flex-shrink-0 w-[80%] sm:w-[50%] md:w-[33%] lg:w-1/4 min-w-[250px] 2xl:w-1/8">
+          <div className="px-2">
             <SpecialDishes
               img={card3}
               alt="Lasagna"
@@ -93,7 +115,7 @@ export const MainPage = () => {
               price="$18.99"
             />
           </div>
-        </div>
+        </Slider>
       </section>
       <section>
         <div className="flex items-center justify-center flex-col mt-12">

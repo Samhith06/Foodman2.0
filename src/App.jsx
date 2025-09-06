@@ -1,10 +1,10 @@
-import './App.css'
-import { BrowserRouter as Router , Route , Routes } from 'react-router-dom'
-import {Auth } from './pages/Auth/index'
-import { MainPage } from './pages/MainPage/index'
-import { Login } from './pages/LoginIn'
-
-import Header from './components/Header'
+import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Auth } from "./pages/Auth/index";
+import { MainPage } from "./pages/MainPage/index";
+import { Login } from "./pages/LoginIn";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function App() {
   return (
@@ -17,8 +17,7 @@ function App() {
         </Routes>
       </Router>
     </div>
-
-  )
+  );
 }
 
-export default App
+export default App;
