@@ -127,7 +127,6 @@ export const MainPage = () => {
             every taste and occasion.
           </p>
         </div>
-        {/* Enhanced Timing Buttons */}
         <div className="flex items-center justify-center gap-2 sm:gap-4 lg:gap-6 mt-8 mb-8 px-4">
           {timingButtons.map((timing) => (
             <button
@@ -161,8 +160,6 @@ export const MainPage = () => {
             </button>
           ))}
         </div>
-
-        {/* Selected Timing Display */}
         <div className="text-center mb-6">
           <div className="inline-flex items-center gap-2 px-6 py-2 bg-orange-100 rounded-full">
             <span className="text-[#fc7f09] font-semibold text-lg">
@@ -170,7 +167,6 @@ export const MainPage = () => {
             </span>
           </div>
         </div>
-        {/* Menu Category Cards */}
 
         {selectedTiming === "Dinner" || selectedTiming === "Lunch" ? (
           <>
@@ -214,6 +210,14 @@ export const MainPage = () => {
           </>
         ) : null}
       </section>
+      <footer className="bg-gray-100 py-6">
+        <div className="container mx-auto text-center">
+          <p className="text-gray-600">
+            &copy; {new Date().getFullYear()} My Restaurant. All rights
+            reserved.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
