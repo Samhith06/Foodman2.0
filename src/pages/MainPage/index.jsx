@@ -27,8 +27,6 @@ export const MainPage = () => {
     { id: "snacks", label: "Snacks", icon: "🍿" },
     { id: "dinner", label: "Dinner", icon: "🌙" },
   ];
-  console.log("Selected Category:", selectedCategory);
-  console.log("Selected Timing:", selectedTiming);
   let sliderRef = useRef(null);
   const play = () => {
     sliderRef.slickPlay();
@@ -38,7 +36,7 @@ export const MainPage = () => {
   };
 
   const settings = {
-    dots: false,
+    dots: true,
     infinite: true,
     slidesToShow: 3,
     slidesToScroll: 1,
@@ -47,8 +45,21 @@ export const MainPage = () => {
     swipeToSlide: true,
     pauseOnHover: true,
     responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 2 } },
-      { breakpoint: 640, settings: { slidesToShow: 1 } },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+          dots: true,
+          arrows: false,
+        },
+      },
     ],
   };
   return (
@@ -64,7 +75,7 @@ export const MainPage = () => {
           innovation with tradition to delight your senses.
         </p>
       </div>
-      <section className="bg-white p-4 m-4 mt-2 2xl:p-8 2xl:m-8 text-center hover:shadow-lg rounded-2xl shadow-gray-300 shadow-md w-full max-w-6xl mx-auto">
+      <section className="bg-white p-4 m-4 mt-2 pb-10 2xl:p-8 2xl:m-8 text-center hover:shadow-lg rounded-2xl shadow-gray-300 shadow-md w-full max-w-6xl mx-auto">
         <Slider {...settings}>
           <div className="px-2">
             <SpecialDishes
@@ -128,7 +139,7 @@ export const MainPage = () => {
             every taste and occasion.
           </p>
         </div>
-        <div className="flex items-center justify-center gap-2 sm:gap-4 lg:gap-6 mt-8 mb-8 px-4">
+        <div className="grid grid-cols-2 sm:flex items-center justify-center gap-2 sm:gap-4 lg:gap-6 mt-8 mb-8 px-4">
           {timingButtons.map((timing) => (
             <button
               key={timing.id}
@@ -156,8 +167,8 @@ export const MainPage = () => {
               <span className="text-base sm:text-lg lg:text-xl">
                 {timing.icon}
               </span>
-              <span className="hidden sm:inline">{timing.label}</span>
-              <span className="sm:hidden">{timing.label.substring(0, 1)}</span>
+              <span className="">{timing.label}</span>
+              {/* <span className="sm:hidden">{timing.label.substring(0, 1)}</span> */}
             </button>
           ))}
         </div>
@@ -171,10 +182,7 @@ export const MainPage = () => {
 
         {selectedTiming === "Dinner" || selectedTiming === "Lunch" ? (
           <>
-            <div
-              className="flex items-center justify-center gap-5 p-4 m-4 mt-2 pt-2"
-              ref={menuRef}
-            >
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5 p-4 m-4 mt-2 pt-2 max-w-7xl mx-auto">
               <Menu
                 food={all}
                 alt="All Items"

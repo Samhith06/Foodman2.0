@@ -375,61 +375,87 @@ const menuData = {
     ],
   },
 };
+const MenuItemCard = ({ data }) => (
+  <div className="group bg-white rounded-xl sm:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1 sm:hover:-translate-y-2 w-full max-w-sm mx-auto">
+    {/* Image Container */}
+    <div className="relative overflow-hidden">
+      <img
+        src={data.image}
+        alt={data.name}
+        className="w-full h-48 sm:h-56 md:h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+      />
+      <div className="absolute top-3 sm:top-4 right-3 sm:right-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 hover:text-red-500 cursor-pointer transition-colors" />
+      </div>
+      <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 bg-black bg-opacity-60 text-white text-xs sm:text-sm px-2 sm:px-3 py-1 rounded-full">
+        <Clock className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1" />
+        {data.cookTime}
+      </div>
+    </div>
 
-function RenderMenuItems() {}
+    {/* Content */}
+    <div className="p-4 sm:p-5 md:p-6 space-y-3 sm:space-y-4">
+      <div className="flex justify-between items-start">
+        <h3 className="text-lg sm:text-xl font-bold text-gray-900 group-hover:text-orange-500 transition-colors leading-tight">
+          {data.name}
+        </h3>
+        <div className="flex items-center gap-1 text-sm text-gray-600 flex-shrink-0 ml-2">
+          <Star className="w-4 h-4 text-yellow-400 fill-current" />
+          <span>{data.rating}</span>
+        </div>
+      </div>
+
+      <p className="text-gray-600 leading-relaxed text-sm sm:text-base line-clamp-3 text-left">
+        {data.description}
+      </p>
+
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-2">
+        <span className="text-xl sm:text-2xl font-bold text-gray-900 order-2 sm:order-1 text-center sm:text-left">
+          ${data.price}
+        </span>
+        <button className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg order-1 sm:order-2 text-sm sm:text-base w-full sm:w-auto">
+          <ShoppingCart className="w-4 h-4 inline mr-2" />
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+);
 
 function Menubottom({ selectedTiming, selectedCategory }) {
   const timingData = menuData[selectedTiming];
-  const categoryData = timingData[selectedCategory];
+  const categoryData = timingData?.[selectedCategory] || [];
+  if (!categoryData || categoryData.length === 0) {
+    return (
+      <div className="flex items-center justify-center min-h-64 px-4">
+        <div className="text-center">
+          <div className="text-6xl mb-4">🍽️</div>
+          <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
+            No items available
+          </h3>
+          <p className="text-gray-600">
+            Sorry, we don't have any {selectedCategory.toLowerCase()} for{" "}
+            {selectedTiming.toLowerCase()} right now.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="grid grid-cols-3 gap-4 mx-10 mb-15 px-5 justify-center items-cneter">
-      {categoryData.map((data) => (
-        <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 max-w-sm mx-auto">
-          {/* Image Container */}
-          <div className="relative overflow-hidden">
-            <img
-              src={data.image}
-              alt={data.name}
-              className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-            />
-            <div className="absolute top-4 right-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <Heart className="w-5 h-5 text-gray-600 hover:text-red-500 cursor-pointer transition-colors" />
-            </div>
-            <div className="absolute bottom-4 left-4 bg-black bg-opacity-60 text-white text-sm px-3 py-1 rounded-full">
-              <Clock className="w-4 h-4 inline mr-1" />
-              {data.cookTime}
-            </div>
-          </div>
-
-          {/* Content */}
-          <div className="p-6 space-y-4">
-            <div className="flex justify-between items-start">
-              <h3 className="text-xl font-bold text-gray-900 group-hover:text-orange-500 transition-colors">
-                {data.name}
-              </h3>
-              <div className="flex items-center gap-1 text-sm text-gray-600">
-                <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                <span>{data.rating}</span>
-              </div>
-            </div>
-
-            <p className="text-gray-600 leading-relaxed line-clamp-3 text-left">
-              {data.description}
-            </p>
-
-            <div className="flex justify-between items-center">
-              <span className="text-2xl font-bold text-gray-900">
-                ${data.price}
-              </span>
-              <button className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg">
-                <ShoppingCart className="w-4 h-4 inline mr-2" />
-                Add to Cart
-              </button>
-            </div>
-          </div>
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-12 lg:mb-16">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 justify-items-center">
+        {categoryData.map((data) => (
+          <MenuItemCard key={data.id} data={data} />
+        ))}
+      </div>
+      {categoryData.length <= 3 && (
+        <div className="text-center mt-8 sm:mt-12">
+          <p className="text-gray-500 text-sm sm:text-base">
+            More delicious {selectedCategory.toLowerCase()} coming soon!
+          </p>
         </div>
-      ))}
+      )}
     </div>
   );
 }

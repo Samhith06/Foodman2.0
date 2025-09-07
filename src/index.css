@@ -1,3 +1,12 @@
 @import "tailwindcss";
 
+@media (max-width: 320px) {
+  .text-responsive {
+    font-size: 0.75rem;
+  }
 
+  .px-responsive {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
