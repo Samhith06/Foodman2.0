@@ -1,5 +1,5 @@
 import React from "react";
-import basepicture from "../../../assets/images/backgroundpic.png";
+import basepicture from "../../../assets/Images/backgroundpic.png";
 // Update hero.jsx
 const Hero = () => {
   return (
