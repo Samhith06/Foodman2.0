@@ -4,6 +4,7 @@ import Header from "../../components/Header";
 import Hero from "./components/hero";
 import SpecialDishes from "./components/specialdishes";
 import Menu from "./components/menu";
+import Menubottom from "./components/Menubottom";
 import card1 from "../../assets/Images/card1.jpeg";
 import card2 from "../../assets/Images/card2.jpeg";
 import card3 from "../../assets/Images/card3.jpeg";
@@ -41,7 +42,7 @@ export const MainPage = () => {
     infinite: true,
     slidesToShow: 3,
     slidesToScroll: 1,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 3000,
     swipeToSlide: true,
     pauseOnHover: true,
@@ -210,6 +211,10 @@ export const MainPage = () => {
           </>
         ) : null}
       </section>
+      <Menubottom
+        selectedCategory={selectedCategory}
+        selectedTiming={selectedTiming}
+      />
       <footer className="bg-gray-100 py-6">
         <div className="container mx-auto text-center">
           <p className="text-gray-600">
