@@ -36,11 +36,11 @@ export const MainPage = () => {
   };
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     slidesToShow: 3,
     slidesToScroll: 1,
-    autoplay: false,
+    autoplay: true,
     autoplaySpeed: 3000,
     swipeToSlide: true,
     pauseOnHover: true,
@@ -64,7 +64,7 @@ export const MainPage = () => {
   };
   return (
     <div>
-      <Header path="/main" />
+      <Header />
       <Hero />
       <div className="flex items-center justify-center flex-col mt-12">
         <h2 className="px-2 text-4xl tracking-tighter lg:text-3xl xl:text-5xl  text-gray-900 font-[700] mb-2 leading-tight text-center">
@@ -75,7 +75,7 @@ export const MainPage = () => {
           innovation with tradition to delight your senses.
         </p>
       </div>
-      <section className="bg-white p-4 m-4 mt-2 pb-10 2xl:p-8 2xl:m-8 text-center hover:shadow-lg rounded-2xl shadow-gray-300 shadow-md w-full max-w-6xl mx-auto">
+      <section className="bg-white p-4 m-4 mt-2 pb-10 mb:pb-4 2xl:p-8 2xl:m-8 text-center hover:shadow-lg rounded-2xl shadow-gray-300 shadow-md w-full max-w-6xl mx-auto">
         <Slider {...settings}>
           <div className="px-2">
             <SpecialDishes
