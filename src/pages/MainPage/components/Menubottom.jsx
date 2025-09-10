@@ -279,7 +279,7 @@ const menuData = {
         id: 22,
         name: "Lobster Bisque",
         description: "Creamy lobster soup with sherry and herbs",
-        price: 12.99,
+        price: 199,
         image: "https://images.unsplash.com/photo-1588186915726-c9d3ac53b8e0",
         rating: 4.7,
         cookTime: "8-10 min",
@@ -290,7 +290,7 @@ const menuData = {
         name: "Stuffed Mushrooms",
         description:
           "Button mushrooms stuffed with herb breadcrumbs and cheese",
-        price: 10.99,
+        price: 199,
         image: "https://images.unsplash.com/photo-1603133872878-684f12166704",
         rating: 4.5,
         cookTime: "12-15 min",
@@ -302,7 +302,7 @@ const menuData = {
         id: 20,
         name: "Grilled Salmon",
         description: "Atlantic salmon with lemon butter sauce and vegetables",
-        price: 24.99,
+        price: 249,
         image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
         rating: 4.8,
         cookTime: "20-25 min",
@@ -312,7 +312,7 @@ const menuData = {
         id: 21,
         name: "Ribeye Steak",
         description: "Premium ribeye steak with garlic mashed potatoes",
-        price: 32.99,
+        price: 329,
         image: "https://images.unsplash.com/photo-1604908177522-b6c0b2f0b87f",
         rating: 4.9,
         cookTime: "25-30 min",
@@ -322,7 +322,7 @@ const menuData = {
         id: 25,
         name: "Lasagna",
         description: "Layers of pasta with meat sauce, ricotta, and mozzarella",
-        price: 18.99,
+        price: 189,
         image: "https://images.unsplash.com/photo-1603133872784-00f4e7b58e94",
         rating: 4.7,
         cookTime: "20-25 min",
@@ -334,7 +334,7 @@ const menuData = {
         id: 23,
         name: "Crème Brûlée",
         description: "Classic French dessert with caramelized sugar top",
-        price: 10.99,
+        price: 109,
         image: "https://images.unsplash.com/photo-1632902429230-d648c6d61ad0",
         rating: 4.8,
         cookTime: "5-7 min",
@@ -345,7 +345,7 @@ const menuData = {
         name: "Chocolate Lava Cake",
         description:
           "Warm chocolate cake with molten center and vanilla ice cream",
-        price: 9.99,
+        price: 299,
         image: "https://images.unsplash.com/photo-1605478951766-63dd90f1a93b",
         rating: 4.9,
         cookTime: "8-10 min",
@@ -359,7 +359,7 @@ const menuData = {
         description: "House red wine - perfect with dinner",
         price: 8.99,
         image: "https://images.unsplash.com/photo-1547514701-42782101795c",
-        rating: 4.3,
+        rating: 430,
         cookTime: "1-2 min",
         category: "Drinks",
       },
@@ -367,7 +367,7 @@ const menuData = {
         id: 28,
         name: "Sparkling Water",
         description: "Premium sparkling water with lime",
-        price: 2.99,
+        price: 299,
         image: "https://images.unsplash.com/photo-1622484212541-d56c5a491091",
         rating: 4.2,
         cookTime: "1 min",
@@ -431,7 +431,7 @@ const MenuItemCard = ({ data }) => {
 
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-2">
           <span className="text-xl sm:text-2xl font-bold text-gray-900 order-2 sm:order-1 text-center sm:text-left">
-            ${data.price}
+            ₹{data.price}
           </span>
           <button
             onClick={handleAddToCart}
