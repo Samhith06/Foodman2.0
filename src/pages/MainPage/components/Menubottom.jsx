@@ -1,5 +1,6 @@
 import React from "react";
 import { Heart, Star, ShoppingCart, Clock } from "lucide-react";
+import { useCart } from "../../../contexts/CartContext";
 
 const menuData = {
   Breakfast: {
@@ -376,52 +377,79 @@ const menuData = {
   },
 };
 
-const MenuItemCard = ({ data }) => (
-  <div className="group bg-white rounded-xl sm:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1 sm:hover:-translate-y-2 w-full max-w-sm mx-auto">
-    {/* Image Container */}
-    <div className="relative overflow-hidden">
-      <img
-        src={data.image}
-        alt={data.name}
-        className="w-full h-48 sm:h-56 md:h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-      />
-      <div className="absolute top-3 sm:top-4 right-3 sm:right-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 hover:text-red-500 cursor-pointer transition-colors" />
-      </div>
-      <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 bg-black bg-opacity-60 text-white text-xs sm:text-sm px-2 sm:px-3 py-1 rounded-full">
-        <Clock className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1" />
-        {data.cookTime}
-      </div>
-    </div>
+const MenuItemCard = ({ data }) => {
+  const { addItem, getItemQuantity } = useCart();
 
-    {/* Content */}
-    <div className="p-4 sm:p-5 md:p-6 space-y-3 sm:space-y-4">
-      <div className="flex justify-between items-start">
-        <h3 className="text-lg sm:text-xl font-bold text-gray-900 group-hover:text-orange-500 transition-colors leading-tight">
-          {data.name}
-        </h3>
-        <div className="flex items-center gap-1 text-sm text-gray-600 flex-shrink-0 ml-2">
-          <Star className="w-4 h-4 text-yellow-400 fill-current" />
-          <span>{data.rating}</span>
+  const itemId = `menu-${data.id}`;
+  const quantity = getItemQuantity(itemId);
+
+  const handleAddToCart = () => {
+    const item = {
+      id: itemId,
+      name: data.name,
+      price: `$${data.price}`,
+      image: data.image,
+      description: data.description,
+      type: "menu",
+    };
+    addItem(item);
+  };
+
+  return (
+    <div className="group bg-white rounded-xl sm:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1 sm:hover:-translate-y-2 w-full max-w-sm mx-auto">
+      {/* Image Container */}
+      <div className="relative overflow-hidden">
+        <img
+          src={data.image}
+          alt={data.name}
+          className="w-full h-48 sm:h-56 md:h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+        />
+        <div className="absolute top-3 sm:top-4 right-3 sm:right-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 hover:text-red-500 cursor-pointer transition-colors" />
+        </div>
+        <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 bg-black bg-opacity-60 text-white text-xs sm:text-sm px-2 sm:px-3 py-1 rounded-full">
+          <Clock className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1" />
+          {data.cookTime}
         </div>
       </div>
 
-      <p className="text-gray-600 leading-relaxed text-sm sm:text-base line-clamp-3 text-left">
-        {data.description}
-      </p>
+      {/* Content */}
+      <div className="p-4 sm:p-5 md:p-6 space-y-3 sm:space-y-4">
+        <div className="flex justify-between items-start">
+          <h3 className="text-lg sm:text-xl font-bold text-gray-900 group-hover:text-orange-500 transition-colors leading-tight">
+            {data.name}
+          </h3>
+          <div className="flex items-center gap-1 text-sm text-gray-600 flex-shrink-0 ml-2">
+            <Star className="w-4 h-4 text-yellow-400 fill-current" />
+            <span>{data.rating}</span>
+          </div>
+        </div>
 
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-2">
-        <span className="text-xl sm:text-2xl font-bold text-gray-900 order-2 sm:order-1 text-center sm:text-left">
-          ${data.price}
-        </span>
-        <button className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg order-1 sm:order-2 text-sm sm:text-base w-full sm:w-auto">
-          <ShoppingCart className="w-4 h-4 inline mr-2" />
-          Add to Cart
-        </button>
+        <p className="text-gray-600 leading-relaxed text-sm sm:text-base line-clamp-3 text-left">
+          {data.description}
+        </p>
+
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-2">
+          <span className="text-xl sm:text-2xl font-bold text-gray-900 order-2 sm:order-1 text-center sm:text-left">
+            ${data.price}
+          </span>
+          <button
+            onClick={handleAddToCart}
+            className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg order-1 sm:order-2 text-sm sm:text-base w-full sm:w-auto relative"
+          >
+            <ShoppingCart className="w-4 h-4 inline mr-2" />
+            {quantity > 0 ? `Added (${quantity})` : "Add to Cart"}
+            {quantity > 0 && (
+              <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                ✓
+              </span>
+            )}
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 function Menubottom({ selectedTiming, selectedCategory }) {
   const timingData = menuData[selectedTiming];

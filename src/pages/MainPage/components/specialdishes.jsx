@@ -1,5 +1,6 @@
 import React from "react";
 import { Heart, Star, ShoppingCart, Clock } from "lucide-react";
+import { useCart } from "../../../contexts/CartContext";
 function SpecialDishes({
   img,
   alt,
@@ -8,6 +9,23 @@ function SpecialDishes({
   rating = 4.8,
   cookTime = "15-20 min",
 }) {
+  const { addItem, getItemQuantity } = useCart();
+
+  // Generate a unique ID for the item
+  const itemId = `special-${alt.toLowerCase().replace(/\s+/g, "-")}`;
+  const quantity = getItemQuantity(itemId);
+
+  const handleAddToCart = () => {
+    const item = {
+      id: itemId,
+      name: alt,
+      price: price,
+      image: img,
+      description: description,
+      type: "special",
+    };
+    addItem(item);
+  };
   return (
     <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 max-w-sm mx-auto">
       {/* Image Container */}
@@ -44,9 +62,17 @@ function SpecialDishes({
 
         <div className="flex justify-between items-center">
           <span className="text-2xl font-bold text-gray-900">{price}</span>
-          <button className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg">
+          <button
+            onClick={handleAddToCart}
+            className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg relative"
+          >
             <ShoppingCart className="w-4 h-4 inline mr-2" />
-            Add to Cart
+            {quantity > 0 ? `Added (${quantity})` : "Add to Cart"}
+            {quantity > 0 && (
+              <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                ✓
+              </span>
+            )}
           </button>
         </div>
       </div>

@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ShoppingCart, User, Menu, X } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
+import { useCart } from "../contexts/CartContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase-config";
 
@@ -9,6 +10,8 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const { user } = useAuth();
+  const { getTotalItems } = useCart();
+  const navigate = useNavigate();
 
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -27,9 +30,23 @@ const Header = () => {
     }
   };
 
+  const handleMenuClick = (e, item) => {
+    if (item.name === "Menu") {
+      e.preventDefault();
+      // Check if we're on the main page
+      if (window.location.pathname === "/main" && window.scrollToMenu) {
+        window.scrollToMenu();
+      } else {
+        // Navigate to main page with menu hash
+        navigate("/main#menu");
+      }
+    }
+  };
+
   const navItems = [
     { name: "Home", path: "/main" },
-    { name: "Menu", path: "/menu" },
+    { name: "Specials", path: "/specials" },
+    { name: "Menu", path: "/main#menu", isMenuButton: true },
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
   ];
@@ -49,22 +66,33 @@ const Header = () => {
 
       {/* Desktop Navigation */}
       <nav className="hidden lg:flex items-center space-x-1">
-        {navItems.map((item) => (
-          <NavLink
-            key={item.name}
-            to={item.path}
-            className={({ isActive }) =>
-              `px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 relative group ${
-                isActive
-                  ? "text-[#fc7f09] bg-orange-50"
-                  : "text-gray-700 hover:text-[#fc7f09] hover:bg-gray-50"
-              }`
-            }
-          >
-            {item.name}
-            <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-[#fc7f09] transition-all duration-200 group-hover:w-full group-hover:left-0"></span>
-          </NavLink>
-        ))}
+        {navItems.map((item) =>
+          item.isMenuButton ? (
+            <button
+              key={item.name}
+              onClick={(e) => handleMenuClick(e, item)}
+              className="px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 relative group text-gray-700 hover:text-[#fc7f09] hover:bg-gray-50"
+            >
+              {item.name}
+              <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-[#fc7f09] transition-all duration-200 group-hover:w-full group-hover:left-0"></span>
+            </button>
+          ) : (
+            <NavLink
+              key={item.name}
+              to={item.path}
+              className={({ isActive }) =>
+                `px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 relative group ${
+                  isActive
+                    ? "text-[#fc7f09] bg-orange-50"
+                    : "text-gray-700 hover:text-[#fc7f09] hover:bg-gray-50"
+                }`
+              }
+            >
+              {item.name}
+              <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-[#fc7f09] transition-all duration-200 group-hover:w-full group-hover:left-0"></span>
+            </NavLink>
+          )
+        )}
       </nav>
 
       {/* Desktop Actions */}
@@ -83,10 +111,12 @@ const Header = () => {
               }
             >
               <ShoppingCart size={20} />
-              {/* Cart badge - you can add item count here */}
-              <span className="absolute -top-1 -right-1 bg-[#fc7f09] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                0
-              </span>
+              {/* Cart badge */}
+              {getTotalItems() > 0 && (
+                <span className="absolute -top-1 -right-1 bg-[#fc7f09] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
+                  {getTotalItems()}
+                </span>
+              )}
             </NavLink>
 
             {/* Profile Dropdown */}
@@ -179,22 +209,35 @@ const Header = () => {
           <div className="lg:hidden absolute top-full left-0 right-0 bg-white border-b border-gray-200 shadow-lg z-50">
             <div className="px-4 py-4 space-y-2">
               {/* Navigation Links */}
-              {navItems.map((item) => (
-                <NavLink
-                  key={item.name}
-                  to={item.path}
-                  className={({ isActive }) =>
-                    `block px-4 py-3 rounded-lg font-medium transition-colors duration-200 ${
-                      isActive
-                        ? "text-[#fc7f09] bg-orange-50"
-                        : "text-gray-700 hover:text-[#fc7f09] hover:bg-gray-50"
-                    }`
-                  }
-                  onClick={closeMenus}
-                >
-                  {item.name}
-                </NavLink>
-              ))}
+              {navItems.map((item) =>
+                item.isMenuButton ? (
+                  <button
+                    key={item.name}
+                    onClick={(e) => {
+                      handleMenuClick(e, item);
+                      closeMenus();
+                    }}
+                    className="block w-full text-left px-4 py-3 rounded-lg font-medium transition-colors duration-200 text-gray-700 hover:text-[#fc7f09] hover:bg-gray-50"
+                  >
+                    {item.name}
+                  </button>
+                ) : (
+                  <NavLink
+                    key={item.name}
+                    to={item.path}
+                    className={({ isActive }) =>
+                      `block px-4 py-3 rounded-lg font-medium transition-colors duration-200 ${
+                        isActive
+                          ? "text-[#fc7f09] bg-orange-50"
+                          : "text-gray-700 hover:text-[#fc7f09] hover:bg-gray-50"
+                      }`
+                    }
+                    onClick={closeMenus}
+                  >
+                    {item.name}
+                  </NavLink>
+                )
+              )}
 
               {/* Mobile Actions */}
               {user ? (

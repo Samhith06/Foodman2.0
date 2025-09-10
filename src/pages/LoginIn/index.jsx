@@ -72,26 +72,29 @@ export const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Header />
 
-      <div className="px-4 py-6 sm:px-6 lg:px-8">
+      <div className="px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
         {/* Header Text */}
-        <div className="text-center mb-8">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
-            Welcome to the Login Page
+        <div className="text-center mb-8 lg:mb-12">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+            Welcome Back to <span className="text-[#fc7f09]">FoodMan</span>
           </h1>
-          <p className="mt-3 text-base sm:text-lg md:text-xl text-gray-600">
-            Please enter your credentials to log in.
+          <p className="mt-4 text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+            Sign in to continue your delicious journey with us.
           </p>
         </div>
         {/* Form Section */}
-        <div className="max-w-md mx-auto">
-          <div className="bg-white shadow-md rounded-lg p-6 sm:p-8">
+        <div className="max-w-md mx-auto lg:max-w-lg">
+          <div className="bg-white shadow-xl rounded-2xl p-6 sm:p-8 lg:p-10 border border-gray-100">
             <form onSubmit={handleLogin} className="space-y-6">
-              <h2 className="text-xl sm:text-2xl font-semibold text-center text-gray-900">
-                Login
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-center text-gray-900 mb-2">
+                Sign In
               </h2>
+              <p className="text-center text-gray-600 text-sm sm:text-base mb-6">
+                Enter your credentials to access your account
+              </p>
 
               {error && (
                 <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm text-center">
@@ -138,45 +141,67 @@ export const Login = () => {
               </div>
 
               {/* Buttons */}
-              <div className="flex gap-2 sm:gap-3 mt-6">
+              <div className="space-y-4">
                 <button
                   type="submit"
                   className="
-      w-full sm:w-1/2 
-      bg-[#fc7f09] text-[#2E2B41] 
-      font-semibold py-3 px-4 
-      [@media(min-width:320px)]:text-[13px]
-      text-sm sm:text-base
-      rounded-md border border-[#fc7f09] 
-      hover:border-2 hover:border-[#2E2B41] hover:bg-[#2E2B41] hover:text-[#fc7f09] 
-      transition duration-200 ease-in-out
-      disabled:opacity-50 disabled:cursor-not-allowed
-      focus:outline-none focus:ring-2 focus:ring-[#fc7f09] focus:ring-offset-2
-    "
+                    w-full 
+                    bg-gradient-to-r from-[#fc7f09] to-[#e56f00]
+                    text-white 
+                    font-semibold py-3 px-6 
+                    text-sm sm:text-base lg:text-lg
+                    rounded-xl
+                    hover:from-[#e56f00] hover:to-[#d65f00]
+                    transform hover:scale-[1.02] active:scale-[0.98]
+                    transition-all duration-200 ease-in-out
+                    disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none
+                    focus:outline-none focus:ring-4 focus:ring-[#fc7f09]/30
+                    shadow-lg hover:shadow-xl
+                  "
                   disabled={loading}
                 >
-                  {loading ? "Logging in..." : "Log In"}
+                  {loading ? (
+                    <div className="flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                      Signing In...
+                    </div>
+                  ) : (
+                    "Sign In"
+                  )}
                 </button>
+
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-gray-300"></div>
+                  </div>
+                  <div className="relative flex justify-center text-sm">
+                    <span className="px-2 bg-white text-gray-500">
+                      Or continue with
+                    </span>
+                  </div>
+                </div>
 
                 <button
                   onClick={handleGoogleSignIn}
                   type="button"
                   className="
-      w-full sm:w-1/2 
-      flex justify-center items-center 
-      bg-[#fc7f09] text-[#2E2B41] 
-      font-semibold py-3 px-4 
-      text-sm sm:text-base
-      rounded-md border border-[#fc7f09] 
-      hover:border-2 hover:border-[#2E2B41] hover:bg-[#2E2B41] hover:text-[#fc7f09] 
-      transition duration-200 ease-in-out
-      disabled:opacity-50 disabled:cursor-not-allowed
-      focus:outline-none focus:ring-2 focus:ring-[#fc7f09] focus:ring-offset-2
-    "
+                    w-full 
+                    flex justify-center items-center 
+                    bg-white text-gray-700
+                    font-semibold py-3 px-6 
+                    text-sm sm:text-base lg:text-lg
+                    rounded-xl border-2 border-gray-300
+                    hover:border-gray-400 hover:bg-gray-50
+                    transform hover:scale-[1.02] active:scale-[0.98]
+                    transition-all duration-200 ease-in-out
+                    disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none
+                    focus:outline-none focus:ring-4 focus:ring-gray-300/30
+                    shadow-md hover:shadow-lg
+                  "
                   disabled={loading}
                 >
                   <svg
-                    className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0"
+                    className="w-5 h-5 mr-3 flex-shrink-0"
                     viewBox="0 0 24 24"
                   >
                     <path
@@ -196,9 +221,7 @@ export const Login = () => {
                       d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                     />
                   </svg>
-                  <span className="truncate sm:text-sm">
-                    {loading ? "Logging in..." : "Google Log In"}
-                  </span>
+                  {loading ? "Signing In..." : "Continue with Google"}
                 </button>
               </div>
             </form>
@@ -216,3 +239,17 @@ export const Login = () => {
     </div>
   );
 };
+{
+  /* Additional responsive improvements for sign up link */
+}
+<style jsx>{`
+  .signup-link {
+    @apply text-center mt-8 px-4;
+  }
+  .signup-link p {
+    @apply text-sm sm:text-base text-gray-600;
+  }
+  .signup-link a {
+    @apply text-[#fc7f09] hover:text-[#e56f00] font-semibold hover:underline transition-colors duration-200;
+  }
+`}</style>;

@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useRef } from "react";
+import { NavLink } from "react-router-dom";
 import Header from "../../components/Header";
 import Hero from "./components/hero";
 import SpecialDishes from "./components/specialdishes";
@@ -21,6 +22,33 @@ export const MainPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All Items");
   const [selectedTiming, setSelectedTiming] = useState("Breakfast");
   const menuRef = useRef(null);
+  const menuSectionRef = useRef(null);
+
+  // Function to scroll to menu section
+  const scrollToMenu = () => {
+    if (menuSectionRef.current) {
+      menuSectionRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
+  // Expose scroll function globally for header access
+  React.useEffect(() => {
+    window.scrollToMenu = scrollToMenu;
+
+    // Check if URL has #menu hash and scroll to menu
+    if (window.location.hash === "#menu") {
+      setTimeout(() => {
+        scrollToMenu();
+      }, 100); // Small delay to ensure page is loaded
+    }
+
+    return () => {
+      delete window.scrollToMenu;
+    };
+  }, []);
   const timingButtons = [
     { id: "breakfast", label: "Breakfast", icon: "🌅" },
     { id: "lunch", label: "Lunch", icon: "☀️" },
@@ -66,11 +94,11 @@ export const MainPage = () => {
     <div>
       <Header />
       <Hero />
-      <div className="flex items-center justify-center flex-col mt-12">
-        <h2 className="px-2 text-4xl tracking-tighter lg:text-3xl xl:text-5xl  text-gray-900 font-[700] mb-2 leading-tight text-center">
+      <div className="flex items-center justify-center flex-col mt-12 lg:mt-16 px-4">
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl text-gray-900 font-bold mb-4 lg:mb-6 leading-tight text-center max-w-4xl">
           Today's Special Dishes
         </h2>
-        <p className="px-2 text-lg tracking-tight lg:w-lg lg:text-xl text-gray-500 leading-relaxed font-[500] text-center">
+        <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-gray-600 leading-relaxed font-medium text-center max-w-3xl">
           Each dish promises an unforgettable dining experience, blending
           innovation with tradition to delight your senses.
         </p>
@@ -128,18 +156,43 @@ export const MainPage = () => {
             />
           </div>
         </Slider>
+
+        {/* View All Specials Button */}
+        <div className="text-center mt-8 lg:mt-12">
+          <NavLink
+            to="/specials"
+            className="inline-block bg-gradient-to-r from-[#fc7f09] to-[#e56f00] hover:from-[#e56f00] hover:to-[#d65f00] text-white px-8 py-4 rounded-xl font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl"
+          >
+            <span className="flex items-center justify-center">
+              <svg
+                className="w-5 h-5 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+              View All Specials
+            </span>
+          </NavLink>
+        </div>
       </section>
-      <section>
-        <div className="flex items-center justify-center flex-col mt-12">
-          <h2 className="px-2 text-4xl tracking-tighter lg:text-3xl xl:text-5xl  text-gray-900 font-[700] mb-2 leading-tight text-center">
+      <section ref={menuSectionRef} id="menu-section">
+        <div className="flex items-center justify-center flex-col mt-16 lg:mt-20 px-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl text-gray-900 font-bold mb-4 lg:mb-6 leading-tight text-center max-w-4xl">
             Our Menu
           </h2>
-          <p className="px-2 text-lg tracking-tight lg:w-lg lg:text-xl text-gray-500 leading-relaxed font-[500] text-center">
+          <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-gray-600 leading-relaxed font-medium text-center max-w-3xl">
             Explore our diverse menu, featuring a wide range of dishes to suit
             every taste and occasion.
           </p>
         </div>
-        <div className="grid grid-cols-2 sm:flex items-center justify-center gap-2 sm:gap-4 lg:gap-6 mt-8 mb-8 px-4">
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 lg:gap-6 mt-8 mb-8 px-4 max-w-4xl mx-auto">
           {timingButtons.map((timing) => (
             <button
               key={timing.id}
@@ -155,8 +208,9 @@ export const MainPage = () => {
               className={`
                 flex items-center gap-2 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 
                 rounded-full font-semibold text-sm sm:text-base lg:text-lg
-                transition-all duration-300 transform hover:scale-105
+                transition-all duration-300 transform hover:scale-105 active:scale-95
                 border-2 shadow-md hover:shadow-lg
+                min-w-[120px] sm:min-w-[140px] justify-center
                 ${
                   selectedTiming === timing.label
                     ? "bg-gradient-to-r from-[#fc7f09] to-[#e67408] text-white border-[#fc7f09] shadow-orange-300"
@@ -167,8 +221,7 @@ export const MainPage = () => {
               <span className="text-base sm:text-lg lg:text-xl">
                 {timing.icon}
               </span>
-              <span className="">{timing.label}</span>
-              {/* <span className="sm:hidden">{timing.label.substring(0, 1)}</span> */}
+              <span className="whitespace-nowrap">{timing.label}</span>
             </button>
           ))}
         </div>
