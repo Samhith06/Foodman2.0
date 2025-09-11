@@ -81,7 +81,7 @@ export const MainPage = () => {
         },
       },
       {
-        breakpoint: 640,
+        breakpoint: 540,
         settings: {
           slidesToShow: 1,
           dots: true,
