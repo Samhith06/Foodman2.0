@@ -16,11 +16,11 @@
     }
   ],
   "env": {
-    "VITE_FIREBASE_API_KEY": "@vite_firebase_api_key",
-    "VITE_FIREBASE_AUTH_DOMAIN": "@vite_firebase_auth_domain",
-    "VITE_FIREBASE_PROJECT_ID": "@vite_firebase_project_id",
-    "VITE_FIREBASE_STORAGE_BUCKET": "@vite_firebase_storage_bucket",
-    "VITE_FIREBASE_MESSAGING_SENDER_ID": "@vite_firebase_messaging_sender_id",
-    "VITE_FIREBASE_APP_ID": "@vite_firebase_app_id"
+    "VITE_FIREBASE_API_KEY": "AIzaSyDVKQp-Qzw92czHxsDq-2hp8uXFm7M_w10",
+    "VITE_FIREBASE_AUTH_DOMAIN": "food-delivery-c9130.firebaseapp.com",
+    "VITE_FIREBASE_PROJECT_ID": "food-delivery-c9130",
+    "VITE_FIREBASE_STORAGE_BUCKET": "food-delivery-c9130.firebasestorage.app",
+    "VITE_FIREBASE_MESSAGING_SENDER_ID": "1087620173304",
+    "VITE_FIREBASE_APP_ID": "1:1087620173304:web:b0e46d4468f2f39be7da0d"
   }
 }
